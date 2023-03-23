@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import Header from './components/header/Header';
+import SearchPanel from './components/searh-panel/SearchPanel';
+import AddNote from './components/add-note/AddNote';
+import NotesList from './components/notes-list/NotesList';
 import './App.css';
 
 function App() {
+  const notes = [
+    { note: 'some note', tags: [], id: 1 },
+    { note: 'another note', tags: [], id: 2 },
+    { note: 'and another one', tags: [], id: 3 },
+  ]
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <SearchPanel />
+      <AddNote />
+      <NotesList notes={notes} />
     </div>
   );
 }

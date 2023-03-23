@@ -1,0 +1,25 @@
+.app-add-form {
+  & h2 {
+    margin: 0 0 20px 0;
+  }
+
+  margin-bottom: 20px;
+  padding: 20px 25px;
+  background-color: #aaa;
+  border-radius: 4px;
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, .15);
+  color: #fff;
+}
+
+.add-form {
+  &__button {
+    width: 200px;
+  }
+}
+
+.add-form__input {
+  width: 100%;
+  margin-bottom: 20px !important;
+  background-color: #fff;
+  border-radius: 4px;
+}
