@@ -1,24 +1,32 @@
 import './search-panel.scss';
-import { TextField } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { useState } from 'react';
+import { TextField, Button } from '@mui/material';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#0971f1',
-      darker: '#053e85',
-    },
-    neutral: {
-      main: '#fff',
-      contrastText: '#fff',
-    },
-  },
-});
 
-const SearchPanel = () => {
+const SearchPanel = ({ onFilterChange }) => {
+
+  const [filter, setFilter] = useState('');
+
+  const onFilterValueChange = (event) => {
+    setFilter(event.currentTarget.value)
+  }
+
   return (
     <div className="search-panel">
-      <TextField className='search-panel__input' id="outlined-basic" label="Search note" variant="outlined" />
+      <TextField
+        className='search-panel__input'
+        id="outlined-basic"
+        label="Search note"
+        variant="outlined"
+        onChange={onFilterValueChange}
+        value={filter} />
+      <Button
+        className='search-panel__button'
+        variant="contained"
+        color="success"
+        onClick={() => onFilterChange(filter)}>
+        Search
+      </Button>
     </div>
   )
 }
