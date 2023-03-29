@@ -4,6 +4,7 @@ import Header from './components/header/Header';
 import SearchPanel from './components/searh-panel/SearchPanel';
 import AddNote from './components/add-note/AddNote';
 import NotesList from './components/notes-list/NotesList';
+import sanitizeHtml from "sanitize-html"
 import './App.css';
 
 function App() {
@@ -13,14 +14,22 @@ function App() {
     return storageData ? storageData : []
   })
   const [id, setId] = useState(notes.length);
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState('');
+
+  let pattern = /#[А-Яа-яA-Za-z]+/gi;
+
+  const sanitizeConf = {
+    allowedTags: ["b", "i", "a", "p"]
+  };
 
   useEffect(() => {
     window.localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
+
   const onAddNotes = (note) => {
-    setNotes([...notes, { note, tags: generateTags(note), id: id }])
+    let newNote = sanitizeHtml(note, sanitizeConf)
+    setNotes([...notes, { note: newNote, tags: generateTags(note), id: id }])
     setId(id + 1)
   }
 
@@ -28,12 +37,37 @@ function App() {
     setNotes(notes.filter(item => item.id !== id))
   }
 
-  const onNoteChange = (id, event) => {
-    const newNote = event.currentTarget.innerHTML
+  const repleceNote = (note, edit) => {
+    return edit
+      ? note
+        .replace(/<span class="note__tag">/g, '')
+        .replace(/<\/span>/g, '')
+      : note
+        .replace(/<span class="note__tag">/g, '')
+        .replace(/<\/span>/g, '')
+        .replace(pattern, '<span class="note__tag">$&</span>')
+  }
+
+
+  const onNoteChange = (id, event, edit) => {
+    const note = sanitizeHtml(event.currentTarget.innerHTML, sanitizeConf)
+    const newNote = repleceNote(note)
+
     setNotes(notes.map(item => (item.id === id)
       ? { ...item, note: newNote, tags: generateTags(newNote) }
       : item)
     )
+  }
+
+  const onTagDelete = (id, tag, edit) => {
+    setNotes(notes.map(item => {
+      if (item.id === id) {
+        const newTags = item.tags.filter(item => item !== tag)
+        const newNote = item.note.replace(tag, tag.slice(1))
+        return { ...item, note: repleceNote(newNote, edit), tags: newTags }
+      }
+      return item
+    }))
   }
 
   const onFilterChange = (filter) => {
@@ -41,8 +75,16 @@ function App() {
   }
 
   const generateTags = (note) => {
-    let pattern = /#\w+/gi;
-    return note.match(pattern);
+    return note.match(pattern) || [];
+  }
+
+  const onEditChange = (id, edit) => {
+    setNotes(notes.map(item => {
+      if (item.id === id) {
+        return { ...item, note: repleceNote(item.note, edit) }
+      }
+      return item
+    }))
   }
 
 
@@ -60,7 +102,9 @@ function App() {
       <NotesList
         notes={visibleNotes}
         onDeleteNote={id => onDeleteNote(id)}
-        onNoteChange={(id, event) => onNoteChange(id, event)} />
+        onNoteChange={(id, event, edit) => onNoteChange(id, event, edit)}
+        onTagDelete={onTagDelete}
+        onEditChange={onEditChange} />
     </div>
   );
 }
