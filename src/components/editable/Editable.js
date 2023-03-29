@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import ContentEditable from 'react-contenteditable'
 
 const Editable = ({ note, edit, onNoteChange }) => {

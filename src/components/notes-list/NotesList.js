@@ -1,5 +1,5 @@
 import Note from '../note/Note';
-import { useMemo } from 'react';
+
 
 import './notes-list.scss';
 
@@ -9,13 +9,15 @@ const NotesList = ({ notes, onDeleteNote, onNoteChange, onTagDelete, onEditChang
 
     const { id, ...itemProps } = item
     return (
-      < Note
-        key={id}
-        {...itemProps}
-        onDeleteNote={() => onDeleteNote(id)}
-        onNoteChange={(event, edit) => onNoteChange(id, event, edit)}
-        onTagDelete={(tag, edit) => onTagDelete(id, tag, edit)}
-        onEditChange={(edit) => onEditChange(id, edit)} />
+      item.note
+        ? < Note
+          key={id}
+          {...itemProps}
+          onDeleteNote={() => onDeleteNote(id)}
+          onNoteChange={(event, edit) => onNoteChange(id, event, edit)}
+          onTagDelete={(tag, edit) => onTagDelete(id, tag, edit)}
+          onEditChange={(edit) => onEditChange(id, edit)} />
+        : null
     )
   })
   return (
