@@ -1,29 +1,32 @@
-import './note.scss';
-
-import { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
+import { deleteNote, changeEdit } from '../../redux/actions';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Editable from '../editable/Editable';
 import Tag from '../tag/Tag';
+import { styledTags } from '../../servises/styledTag';
 
-const Note = ({ note, tags, onDeleteNote, onNoteChange, onTagDelete, onEditChange }) => {
-  const [edit, setEdit] = useState(true)
+import './note.scss';
 
-  const editChange = () => {
-    setEdit(edit => !edit)
-    onEditChange(!edit)
-  }
+const Note = ({ note, id, tags, edit }) => {
 
-  const tagList = tags.map((item, index) => <Tag onTagDelete={() => onTagDelete(item, edit)} tag={item} key={index} />)
+  const dispatch = useDispatch()
+
+  const editChange = () => dispatch(changeEdit(id, !edit))
+
+  const onDeleteNote = () => dispatch(deleteNote(id))
+
+  const tagList = tags.map((item, index) => <Tag tag={item} key={index} id={id} />)
+
+  const styledNote = styledTags(note, edit)
 
   return (
     <li className="note">
       <div className="note__body">
         <Editable
           edit={edit}
-          note={note}
-          onNoteChange={(event) => onNoteChange(event, edit)}
+          note={styledNote}
+          id={id}
         />
         <div className='note__buttons'>
           <IconButton
@@ -35,7 +38,8 @@ const Note = ({ note, tags, onDeleteNote, onNoteChange, onTagDelete, onEditChang
           <button
             type="button"
             className='edit-button'
-            onClick={editChange}> {edit ? 'Edit' : 'Ok'}
+            onClick={editChange}>
+            {edit ? 'Edit' : 'Ok'}
           </button>
         </div>
       </div>

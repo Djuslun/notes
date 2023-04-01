@@ -1,0 +1,6 @@
+export const createNote = (note, id, tags) => ({ type: "NOTE_CREATE", data: { note, id, tags, edit: true } })
+export const deleteNote = (id) => ({ type: "NOTE_DELETED", data: { id } })
+export const changeNote = (note, id, tags) => ({ type: "NOTE_CHANGE", data: { note, id, tags } })
+export const changeFilter = (filter) => ({ type: "FILTER_CHANGE", data: { filter } })
+export const deleteTag = (tag, id, edit) => ({ type: "TAG_DELETED", data: { tag, id, edit } })
+export const changeEdit = (id, edit) => ({ type: "EDIT_CHANGE", data: { id, edit } })

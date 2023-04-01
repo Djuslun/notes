@@ -1,30 +1,29 @@
+import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { changeFilter } from '../../redux/actions';
+import { Button } from '@mui/material';
 import './search-panel.scss';
-import { useState } from 'react';
-import { TextField, Button } from '@mui/material';
 
+const SearchPanel = () => {
+  const inputRef = useRef()
+  const dispatch = useDispatch()
 
-const SearchPanel = ({ onFilterChange }) => {
-
-  const [filter, setFilter] = useState('');
-
-  const onFilterValueChange = (event) => {
-    setFilter(event.currentTarget.value)
+  const onFilterValueChange = () => {
+    const newFilter = inputRef.current.value
+    dispatch(changeFilter(newFilter))
   }
 
   return (
     <div className="search-panel">
-      <TextField
+      <input
+        ref={inputRef}
         className='search-panel__input'
-        id="outlined-basic"
-        label="Search note"
-        variant="outlined"
-        onChange={onFilterValueChange}
-        value={filter} />
+        placeholder='Search note' />
       <Button
         className='search-panel__button'
         variant="contained"
         color="success"
-        onClick={() => onFilterChange(filter)}>
+        onClick={onFilterValueChange} >
         Search
       </Button>
     </div>

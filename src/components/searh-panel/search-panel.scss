@@ -7,10 +7,13 @@
   color: #fff;
 
   &__input {
+    padding: 10px;
     background: #fff;
+    height: 50px;
     width: 100%;
     border-radius: 4px;
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;
+    border: none;
   }
 
   &__button {

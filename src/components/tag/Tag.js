@@ -3,7 +3,12 @@ import './tag.scss'
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const Tag = ({ tag, onTagDelete }) => {
+import { useDispatch } from 'react-redux';
+import { deleteTag } from '../../redux/actions';
+
+const Tag = ({ tag, id }) => {
+  const dispatch = useDispatch()
+
   return (
     <div className="tag">
       {tag}
@@ -11,7 +16,7 @@ const Tag = ({ tag, onTagDelete }) => {
         className='delete-button'
         aria-label="delete"
         size='small'
-        onClick={onTagDelete}>
+        onClick={() => dispatch(deleteTag(tag, id))}>
         <DeleteIcon />
       </IconButton>
     </div>

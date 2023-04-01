@@ -1,16 +1,26 @@
-import { useState } from 'react';
-
+import { useRef } from 'react';
+import { createNote } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import uniqid from 'uniqid'
+import sanitizeHtml from "sanitize-html"
+import { sanitizeConf } from "../../consts"
+import { generateTags } from "../../servises/tags"
+import { Button } from '@mui/material';
 import './add-note.scss';
-import { TextField, Button } from '@mui/material';
 
-const AddNote = ({ onAddNotes }) => {
-  const [note, setNote] = useState('');
+const AddNote = ({ }) => {
+  const inputRef = useRef()
+
+  const dispatch = useDispatch();
 
   const onSubmit = (event) => {
     event.preventDefault()
-    if (note.trim()) {
-      onAddNotes(note)
-      setNote('')
+    const id = uniqid()
+    const note = inputRef.current.value
+    const newNote = sanitizeHtml(note, sanitizeConf).trim()
+    const tags = generateTags(newNote)
+    if (newNote) {
+      dispatch(createNote(newNote, id, tags))
     }
   }
 
@@ -20,14 +30,10 @@ const AddNote = ({ onAddNotes }) => {
       <form
         className="add-form"
         onSubmit={onSubmit}>
-        <TextField
+        <input
+          ref={inputRef}
           className='add-form__input'
-          id="outlined-basic"
-          label="Add note"
-          variant="outlined"
-          color="success"
-          value={note}
-          onChange={(e) => setNote(e.target.value)} />
+          placeholder="Add note" />
         <Button
           className='add-form__button'
           type="submit"
