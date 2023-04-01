@@ -8,7 +8,7 @@ import { generateTags } from "../../servises/tags"
 import { Button } from '@mui/material';
 import './add-note.scss';
 
-const AddNote = ({ }) => {
+const AddNote = () => {
   const inputRef = useRef()
   const dispatch = useDispatch();
 
