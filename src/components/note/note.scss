@@ -43,9 +43,15 @@
 }
 
 .edit-button {
+  width: 70px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 1px #776c6c;
   cursor: pointer;
+}
+
+.editable:focus {
+  outline-offset: 3px;
+  outline: #000 2px solid;
 }

@@ -10,7 +10,6 @@ import './add-note.scss';
 
 const AddNote = ({ }) => {
   const inputRef = useRef()
-
   const dispatch = useDispatch();
 
   const onSubmit = (event) => {

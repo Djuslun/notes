@@ -1,10 +1,8 @@
-import './tag.scss'
-
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import { useDispatch } from 'react-redux';
 import { deleteTag } from '../../redux/actions';
+import './tag.scss'
 
 const Tag = ({ tag, id }) => {
   const dispatch = useDispatch()

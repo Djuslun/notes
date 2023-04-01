@@ -8,8 +8,11 @@ import { generateTags } from "../../servises/tags"
 
 const Editable = ({ note, edit, id }) => {
   const contentEditable = useRef();
-
   const dispatch = useDispatch()
+
+  if (!edit) {
+    contentEditable.current?.focus()
+  }
 
   const handleChange = event => {
     const changedNote = sanitizeHtml(event.target.value, sanitizeConf)
@@ -26,7 +29,8 @@ const Editable = ({ note, edit, id }) => {
       disabled={edit}       // use true to disable editing
       onChange={(event) => handleChange(event)} // handle innerHTML change
       tagName='p' // Use a custom HTML tag (uses a div by default)
-      className='note__text'
+      className={`note__text ${!edit ? 'editable' : ''}`}
+      tabIndex={0}
     />
   </>
 };
