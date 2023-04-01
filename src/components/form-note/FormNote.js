@@ -1,23 +1,18 @@
 import { useRef } from 'react';
 import { createNote } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
-import uniqid from 'uniqid'
-import sanitizeHtml from "sanitize-html"
-import { sanitizeConf } from "../../consts"
-import { generateTags } from "../../servises/tags"
 import { Button } from '@mui/material';
-import './add-note.scss';
+import { submitFormPrepare } from '../../servises/submitForm';
+import './form-note.scss';
 
-const AddNote = () => {
+const FormNote = () => {
   const inputRef = useRef()
   const dispatch = useDispatch();
 
-  const onSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    const id = uniqid()
-    const note = inputRef.current.value
-    const newNote = sanitizeHtml(note, sanitizeConf).trim()
-    const tags = generateTags(newNote)
+    const { newNote, id, tags } = submitFormPrepare(inputRef)
+
     if (newNote) {
       dispatch(createNote(newNote, id, tags))
       inputRef.current.value = ''
@@ -29,7 +24,7 @@ const AddNote = () => {
       <h2>Add note</h2>
       <form
         className="add-form"
-        onSubmit={onSubmit}>
+        onSubmit={handleSubmit}>
         <input
           ref={inputRef}
           className='add-form__input'
@@ -46,4 +41,4 @@ const AddNote = () => {
   )
 }
 
-export default AddNote;
+export default FormNote;
