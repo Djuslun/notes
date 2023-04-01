@@ -55,7 +55,7 @@ export const reducer = (state = initialState, action) => {
     case 'TAG_DELETED':
       {
         const { id, tag } = action.data
-        const newNotes = notes.map(item => { filterTag(item, id, tag) })
+        const newNotes = notes.map(item => filterTag(item, id, tag))
         return {
           ...state,
           notes: newNotes

@@ -21,6 +21,7 @@ const AddNote = ({ }) => {
     const tags = generateTags(newNote)
     if (newNote) {
       dispatch(createNote(newNote, id, tags))
+      inputRef.current.value = ''
     }
   }
 
