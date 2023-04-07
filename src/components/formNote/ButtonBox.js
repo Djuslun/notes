@@ -1,10 +1,10 @@
-const ButtonBox = ({ id, edit, handleDelete, handleOpen, handleEdit }) => {
+const ButtonBox = ({ noteId, edit, handleDelete, handleOpen, handleEdit }) => {
 
   return <div className="button__box">
-    {id
+    {noteId
       ? <button className="form-note__button" type="button" onClick={handleDelete}>Delete</button>
       : <button className="form-note__button" type="submit">Submit</button>}
-    {id
+    {noteId
       ? <button
         type="button"
         className="form-note__button"
@@ -12,13 +12,13 @@ const ButtonBox = ({ id, edit, handleDelete, handleOpen, handleEdit }) => {
         Close
       </button>
       : null}
-    {id
+    {noteId
       ? <button
         type={!edit ? "submit" : 'button'}
         className="form-note__button"
         onClick={handleEdit}
       >
-        Edit
+        {edit ? 'Ok' : 'Edit'}
       </button>
       : null}
   </div >

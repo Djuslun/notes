@@ -10,7 +10,7 @@ import { tagOptions } from "../../redux/reducer";
 import ButtonBox from "./ButtonBox";
 import './FormNote.scss'
 
-const FormNote = ({ title, description, tags, id, handleOpen, handleDelete }) => {
+const FormNote = ({ title, description, tags, noteId, handleOpen, handleDelete }) => {
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
 
@@ -39,8 +39,8 @@ const FormNote = ({ title, description, tags, id, handleOpen, handleDelete }) =>
           .required('Requiered'),
       })}
       onSubmit={({ title, description, tags }, { resetForm }) => {
-        if (id) {
-          dispatch(changeNote(title, description, id, tags))
+        if (noteId) {
+          dispatch(changeNote(title, description, noteId, tags))
         }
         else {
           dispatch(createNote(title, description, uniqid(), tags))
@@ -49,13 +49,14 @@ const FormNote = ({ title, description, tags, id, handleOpen, handleDelete }) =>
       }}
     >
       <Form className="form-note">
-        <h2 className="form-note__title title">{id ? 'Note' : 'Add note'}</h2>
+        <h2 className="form-note__title title">{noteId ? 'Note' : 'Add note'}</h2>
         <CustomField
           label={'Note title'}
           name='title'
           type="text"
           id='title'
           edit={edit}
+          noteId={noteId}
         />
         <CustomField
           label={'Note description'}
@@ -63,6 +64,7 @@ const FormNote = ({ title, description, tags, id, handleOpen, handleDelete }) =>
           as='textarea'
           id='description'
           edit={edit}
+          noteId={noteId}
         />
         <CustomField
           label={'Note tags'}
@@ -70,12 +72,13 @@ const FormNote = ({ title, description, tags, id, handleOpen, handleDelete }) =>
           component={MultiSelect}
           id='tags'
           edit={edit}
+          noteId={noteId}
           placeholder='Select tags'
           isMulti={true}
           options={tagOptions}
         />
         <ButtonBox
-          id={id}
+          noteId={noteId}
           edit={edit}
           handleDelete={handleDelete}
           handleOpen={handleOpen}

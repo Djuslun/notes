@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux'
 import { deleteNote } from '../../redux/actions'
 import FormNote from '../formNote/FormNote'
 
-const Note = ({ title, description, tags, id, handleOpen }) => {
+const Note = ({ title, description, tags, id: noteId, handleOpen }) => {
   const dispatch = useDispatch()
 
-  const handleDelete = () => dispatch(deleteNote(id))
+  const handleDelete = () => dispatch(deleteNote(noteId))
 
   return (
     <div className='note'>
@@ -14,7 +14,7 @@ const Note = ({ title, description, tags, id, handleOpen }) => {
         title={title}
         description={description}
         tags={tags}
-        id={id}
+        noteId={noteId}
         handleOpen={handleOpen}
         handleDelete={handleDelete} />
     </div>
