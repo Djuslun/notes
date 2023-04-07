@@ -1,12 +1,23 @@
 import { NOTE_CREATE, NOTE_DELETED, NOTE_CHANGE, FILTER_CHANGE } from './types'
 
+export const tagOptions = [
+  { value: 'Work', label: 'Work' },
+  { value: 'Home', label: 'Home' },
+  { value: 'Hobby', label: 'Hobby' },
+  { value: 'Books', label: 'Books' }
+]
+
+export const allTags = tagOptions.reduce((acc, tag) => {
+  acc[tag.value] = []
+  return acc
+}, {})
+
+
 const initialState = {
   notes: {},
   tags: {
     all: [],
-    Home: [],
-    Work: [],
-    Hobby: []
+    ...allTags
   },
   filter: 'all'
 }

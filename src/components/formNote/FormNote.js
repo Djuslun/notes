@@ -6,15 +6,15 @@ import { useDispatch } from "react-redux";
 import uniqid from 'uniqid'
 import MultiSelect from "./CustomSelect";
 import { CustomField } from "./CustomField";
+import { tagOptions } from "../../redux/reducer";
+import ButtonBox from "./ButtonBox";
 import './FormNote.scss'
 
 const FormNote = ({ title, description, tags, id, handleOpen, handleDelete }) => {
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
 
-  const handleEdit = () => {
-    setEdit(!edit)
-  }
+  const handleEdit = () => setEdit(!edit)
 
   return (
     <Formik
@@ -52,55 +52,34 @@ const FormNote = ({ title, description, tags, id, handleOpen, handleDelete }) =>
         <h2 className="form-note__title title">{id ? 'Note' : 'Add note'}</h2>
         <CustomField
           label={'Note title'}
-          className='form-note__field'
-          type="text"
           name='title'
+          type="text"
           id='title'
-          disabled={id ? !edit : false} />
+          edit={edit}
+        />
         <CustomField
           label={'Note description'}
-          as='textarea'
-          className='form-note__field'
           name="description"
+          as='textarea'
           id='description'
-          disabled={id ? !edit : false}
+          edit={edit}
         />
         <CustomField
-          disabled={id ? !edit : false}
+          label={'Note tags'}
           name='tags'
-          id='tags'
-          placeholder='Select tags'
-          className='form-note__field'
-          isMulti={true}
           component={MultiSelect}
-          options={[
-            { value: 'Work', label: 'Work' },
-            { value: 'Home', label: 'Home' },
-            { value: 'Hobby', label: 'Hobby' }
-          ]}
+          id='tags'
+          edit={edit}
+          placeholder='Select tags'
+          isMulti={true}
+          options={tagOptions}
         />
-        <div className="button__box">
-          {id
-            ? <button className="form-note__button" onClick={handleDelete}>Delete</button>
-            : <button className="form-note__button" type="submit">Submit</button>}
-          {id
-            ? <button
-              type="button"
-              className="form-note__button"
-              onClick={handleOpen}>
-              Close
-            </button>
-            : null}
-          {id
-            ? <button
-              type={!edit ? "submit" : 'button'}
-              className="form-note__button"
-              onClick={(props) => handleEdit(props)}
-            >
-              Edit
-            </button>
-            : null}
-        </div>
+        <ButtonBox
+          id={id}
+          edit={edit}
+          handleDelete={handleDelete}
+          handleOpen={handleOpen}
+          handleEdit={handleEdit} />
       </Form>
     </Formik >
   )

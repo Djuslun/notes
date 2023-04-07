@@ -3,6 +3,7 @@ import { changeFilter } from '../../redux/actions';
 import { Form, Formik, Field } from "formik";
 import * as Yup from 'yup'
 import MultiSelect from "../formNote/CustomSelect";
+import { tagOptions } from "../../redux/reducer";
 import './search-panel.scss';
 
 const SearchPanel = () => {
@@ -32,9 +33,7 @@ const SearchPanel = () => {
           component={MultiSelect}
           options={[
             { value: 'all', label: 'All' },
-            { value: 'Work', label: 'Work' },
-            { value: 'Home', label: 'Home' },
-            { value: 'Hobby', label: 'Hobby' }
+            ...tagOptions
           ]}
           InputProps={value => onFilterValueChange(value.value)}
         />
