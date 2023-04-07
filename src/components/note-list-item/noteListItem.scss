@@ -1,0 +1,23 @@
+.note-li {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  margin: 0 0 20px 0;
+  background-color: #fff;
+  border-radius: 5px;
+
+  color: #000;
+
+  &__body {
+    margin-bottom: 10px;
+  }
+
+  &__tags {
+    display: flex;
+  }
+
+  &__tag {
+    margin-right: 10px;
+  }
+}

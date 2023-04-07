@@ -1,21 +1,4 @@
-.search-panel {
-  display: flex;
-  padding: 25px;
-  border-radius: 4px;
-  background-color: #aaa;
-
-  &__input {
-    padding: 10px;
-    background: #fff;
-    height: 40px;
-    width: 100%;
-    border-radius: 4px;
-    margin: 0 10px 0px 0;
-    border: none;
-  }
-
-  &__button {
-    width: 200px;
-    height: 40px;
-  }
+.search-form {
+  color: #000;
+  width: 200px;
 }

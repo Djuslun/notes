@@ -1,53 +1,24 @@
-import { useDispatch } from 'react-redux';
-import { deleteNote, changeEdit } from '../../redux/actions';
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Editable from '../editable/Editable';
-import Tag from '../tag/Tag';
-import { styledTags } from '../../servises/styledTag';
+import './note.scss'
+import { useDispatch } from 'react-redux'
+import { deleteNote } from '../../redux/actions'
+import FormNote from '../formNote/FormNote'
 
-import './note.scss';
-
-const Note = ({ note, id, tags, edit }) => {
-
+const Note = ({ title, description, tags, id, handleOpen }) => {
   const dispatch = useDispatch()
 
-  const editChange = () => dispatch(changeEdit(id, !edit))
-
-  const onDeleteNote = () => dispatch(deleteNote(id))
-
-  const tagList = tags.map((item, index) => <Tag tag={item} key={index} id={id} />)
-
-  const styledNote = styledTags(note, edit)
+  const handleDelete = () => dispatch(deleteNote(id))
 
   return (
-    <li className="note">
-      <div className="note__body">
-        <Editable
-          edit={edit}
-          note={styledNote}
-          id={id}
-        />
-        <div className='note__buttons'>
-          <IconButton
-            className='delete-button'
-            aria-label="delete"
-            onClick={onDeleteNote}>
-            <DeleteIcon />
-          </IconButton>
-          <button
-            type="button"
-            className='edit-button'
-            onClick={editChange}>
-            {edit ? 'Edit' : 'Ok'}
-          </button>
-        </div>
-      </div>
-      <div className="note__tags">
-        {tagList}
-      </div>
-    </li>
+    <div className='note'>
+      <FormNote
+        title={title}
+        description={description}
+        tags={tags}
+        id={id}
+        handleOpen={handleOpen}
+        handleDelete={handleDelete} />
+    </div>
   )
 }
 
-export default Note;
+export default Note

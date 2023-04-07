@@ -1,9 +1,9 @@
-import { NOTE_CREATE, NOTE_DELETED, NOTE_CHANGE, FILTER_CHANGE, TAG_DELETED, EDIT_CHANGE } from './types'
+import { NOTE_CREATE, NOTE_DELETED, NOTE_CHANGE, FILTER_CHANGE } from './types'
 
-export const createNote = (note, id, tags) => {
+export const createNote = (title, description, id, tags) => {
   return {
     type: NOTE_CREATE,
-    data: { note, id, tags, edit: true }
+    data: { title, description, id, tags }
   }
 }
 
@@ -14,13 +14,6 @@ export const deleteNote = (id) => {
   }
 }
 
-export const changeNote = (note, id, tags) => {
-  return {
-    type: NOTE_CHANGE,
-    data: { note, id, tags }
-  }
-}
-
 export const changeFilter = (filter) => {
   return {
     type: FILTER_CHANGE,
@@ -28,16 +21,9 @@ export const changeFilter = (filter) => {
   }
 }
 
-export const deleteTag = (tag, id, edit) => {
+export const changeNote = (title, description, id, tags) => {
   return {
-    type: TAG_DELETED,
-    data: { tag, id, edit }
-  }
-}
-
-export const changeEdit = (id, edit) => {
-  return {
-    type: EDIT_CHANGE,
-    data: { id, edit }
+    type: NOTE_CHANGE,
+    data: { title, description, id, tags }
   }
 }

@@ -1,76 +1,69 @@
-import { NOTE_CREATE, NOTE_DELETED, NOTE_CHANGE, FILTER_CHANGE, TAG_DELETED, EDIT_CHANGE } from './types'
+import { NOTE_CREATE, NOTE_DELETED, NOTE_CHANGE, FILTER_CHANGE } from './types'
 
 const initialState = {
-  notes: [],
-  filter: ''
-}
-
-const filterTag = ({ note, tags, id: itemId, ...item }, id, tag) => {
-  if (itemId === id) {
-    const newTags = tags.filter(item => item !== tag)
-    const newNote = note.split(tag).join(tag.slice(1))
-    return { ...item, note: newNote, tags: newTags }
-  }
-  return item
+  notes: {},
+  tags: {
+    all: [],
+    Home: [],
+    Work: [],
+    Hobby: []
+  },
+  filter: 'all'
 }
 
 export const reducer = (state = initialState, action) => {
-  const { notes } = state
+  const { notes, tags } = state
 
   switch (action.type) {
     case NOTE_CREATE:
       {
-        const { note, id, tags, edit } = action.data
+        const { title, description, id, tags: newNoteTags } = action.data
+        const newTags = newNoteTags.reduce((acc, item) => ({ ...acc, [item]: [...acc[item], id] }), tags)
+
         return {
           ...state,
-          notes: [...notes, { note, id, tags, edit }]
+          notes: { ...notes, [id]: { title, description, id, tags: newNoteTags } },
+          tags: { ...tags, ...newTags, 'all': [...tags['all'], id] }
         }
       }
     case NOTE_DELETED:
       {
         const { id } = action.data
-        const newNotes = notes.filter(item => item.id !== id)
+        const notesCopy = JSON.parse(JSON.stringify(notes))
+        const tagsCopy = JSON.parse(JSON.stringify(tags))
+        tagsCopy.all = tagsCopy.all.filter(item => item !== id)
+        notes[id]['tags'].forEach(tag => tagsCopy[tag] = tagsCopy[tag].filter(item => item !== id));
+        delete notesCopy[id]
+
         return {
           ...state,
-          notes: newNotes
-        }
-      }
-    case NOTE_CHANGE:
-      {
-        const { note, id, tags } = action.data
-        const changedNotes = notes.map(item => (item.id === id)
-          ? { ...item, note, tags }
-          : item)
-        return {
-          ...state,
-          notes: changedNotes
+          notes: notesCopy,
+          tags: tagsCopy
         }
       }
     case FILTER_CHANGE:
       {
+        const { filter: newFilter } = action.data
+
         return {
           ...state,
-          filter: action.data.filter
+          filter: newFilter
         }
       }
-    case TAG_DELETED:
+    case NOTE_CHANGE:
       {
-        const { id, tag } = action.data
-        const newNotes = notes.map(item => filterTag({ ...item }, id, tag))
+        const { title, description, id, tags: newNoteTags } = action.data
+        const deletedTags = notes[id].tags.filter(x => !newNoteTags.includes(x));
+        const addedTags = newNoteTags.filter(x => !notes[id].tags.includes(x));
+        let tagsCopy = JSON.parse(JSON.stringify(tags))
+        deletedTags.forEach(tag => tagsCopy[tag] = tagsCopy[tag].filter(item => item !== id));
+        const newTags = addedTags.reduce((acc, item) => ({ ...acc, [item]: [...acc[item], id] }), tagsCopy)
+        tagsCopy = { ...tagsCopy, ...newTags }
+
         return {
           ...state,
-          notes: newNotes
-        }
-      }
-    case EDIT_CHANGE:
-      {
-        const { id, edit } = action.data
-        const newNotes = notes.map(item => (item.id === id)
-          ? { ...item, edit }
-          : item)
-        return {
-          ...state,
-          notes: newNotes
+          notes: { ...notes, [id]: { title, description, id, tags: newNoteTags } },
+          tags: tagsCopy
         }
       }
     default:

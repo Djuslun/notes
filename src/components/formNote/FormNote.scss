@@ -1,0 +1,76 @@
+@import '../../styles/var.scss';
+
+
+.form-note {
+  width: 500px;
+  color: #fff;
+  padding: 20px;
+  background-color: $blue;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  border-radius: 5px;
+
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  &__input {
+    position: relative;
+    width: 100%;
+    padding-bottom: 25px;
+  }
+
+  &__button {
+    width: 70px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  &__button:focus {
+    outline: 1px #000 solid;
+    outline-offset: 3px;
+  }
+
+  &__field {
+    padding: 10px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+  }
+
+  &__field:disabled {
+    color: #555;
+    background: #fff;
+  }
+}
+
+.react-select-container {
+  color: #000;
+  width: 100%;
+}
+
+.button__box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.error {
+  position: absolute;
+  bottom: 5px;
+  color: #a00;
+}
+
+@media (max-width: 768px) {
+  .form-note {
+    width: 100%;
+  }
+}

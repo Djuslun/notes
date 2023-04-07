@@ -1,19 +1,22 @@
 import { useSelector } from 'react-redux';
-import { filteredNotes } from '../../servises/filterNotes';
-import Note from '../note/Note';
+
+import Note from '../note-list-item/NoteListItem';
 import './notes-list.scss';
 
 const NotesList = () => {
-  const notes = useSelector(state => state.notes)
-  const filter = useSelector(state => state.filter)
+  const filter = useSelector(({ filter }) => filter)
+  const notesId = useSelector(({ tags }) => tags[filter])
 
-  const visibleNotes = filteredNotes(notes, filter)
-
-  const notesList = visibleNotes.map(item => < Note key={item.id} {...item} />)
+  const notesList = notesId.map(id => < Note key={id} id={id} />)
 
   return (
     <ul className="app-list">
-      {notesList.length ? notesList : 'There no notes'}
+      {notesList.length
+        ? <>
+          <li className='app-list__title'>Notes</li>
+          {notesList}
+        </>
+        : <li className='app-list__title'>There are no notes</li>}
     </ul>
   )
 }
