@@ -1,13 +1,13 @@
 import { Field, ErrorMessage } from "formik"
 
-export const CustomField = ({ label, edit, noteId, ...props }) => {
+export const CustomField = ({ label, edit, noteId, className, ...props }) => {
   return (
     <>
       <div className="form-note__input">
         <label >
-          <p className="form-note__label">{label}</p>
+          <p className={`form-note__label`}>{label}</p>
           <Field
-            className='form-note__field'
+            className={`form-note__field ${className ? className : ''}`}
             disabled={noteId ? !edit : false}
             {...props}
           />

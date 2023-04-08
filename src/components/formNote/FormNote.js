@@ -62,6 +62,7 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
           name="description"
           as='textarea'
           id='description'
+          className={'form-note__description-field'}
           edit={edit}
           noteId={noteId}
         />
