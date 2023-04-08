@@ -1,5 +1,4 @@
 const ButtonBox = ({ noteId, edit, handleDelete, handleOpen, handleEdit }) => {
-
   return <div className="button__box">
     {noteId
       ? <button className="form-note__button" type="button" onClick={handleDelete}>Delete</button>

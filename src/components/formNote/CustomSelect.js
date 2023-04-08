@@ -50,6 +50,7 @@ const MultiSelect = ({
           value={getValue()}
           onChange={onChange}
           onBlur={field.onBlur}
+          inputId={field.name}
           options={options}
           isMulti={true}
           closeMenuOnSelect={false}
@@ -58,7 +59,6 @@ const MultiSelect = ({
           maxMenuHeight={'70px'}
         />
       </>
-
     )
   }
 }

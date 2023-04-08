@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Formik } from "formik";
+import { Form, Formik, Field } from "formik";
 import * as Yup from 'yup'
 import { createNote, changeNote } from '../../redux/actions'
 import { useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ import { tagOptions } from "../../redux/reducer";
 import ButtonBox from "./ButtonBox";
 import './FormNote.scss'
 
-const FormNote = ({ title, description, tags, noteId, handleOpen, handleDelete }) => {
+const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, handleDelete }) => {
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
 
@@ -21,7 +21,7 @@ const FormNote = ({ title, description, tags, noteId, handleOpen, handleDelete }
       initialValues={{
         title: title,
         description: description,
-        tags: tags,
+        tags: noteTags,
       }}
       validationSchema={Yup.object({
         title: Yup
@@ -35,8 +35,7 @@ const FormNote = ({ title, description, tags, noteId, handleOpen, handleDelete }
           .min(0, ''),
         tags: Yup
           .array()
-          .min(1, 'At least one tag')
-          .required('Requiered'),
+          .min(1, 'At least one tag'),
       })}
       onSubmit={({ title, description, tags }, { resetForm }) => {
         if (noteId) {

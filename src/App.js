@@ -11,7 +11,7 @@ function App() {
         <FormNote
           title=''
           description=''
-          tags=''
+          tags={[]}
         />
         <NotesList />
       </div>
