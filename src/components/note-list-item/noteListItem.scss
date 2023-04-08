@@ -6,7 +6,7 @@
   margin: 0 0 20px 0;
   background-color: #fff;
   border-radius: 5px;
-
+  transition: 0.3s;
   color: #000;
 
   &__body {
@@ -20,4 +20,8 @@
   &__tag {
     margin-right: 10px;
   }
+}
+
+.note-li:hover {
+  background-color: #b5b9df;
 }

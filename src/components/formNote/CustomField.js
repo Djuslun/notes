@@ -1,6 +1,5 @@
 import { Field, ErrorMessage } from "formik"
 
-
 export const CustomField = ({ label, edit, noteId, ...props }) => {
   const { id } = props
   return (

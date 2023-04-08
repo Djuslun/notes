@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-
 import Note from '../note-list-item/NoteListItem';
 import './notes-list.scss';
 

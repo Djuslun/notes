@@ -1,6 +1,6 @@
 import Select from 'react-select';
 
-const MultiSelect = ({
+const CustomSelect = ({
   field,
   form,
   options,
@@ -63,4 +63,4 @@ const MultiSelect = ({
   }
 }
 
-export default MultiSelect;
+export default CustomSelect;

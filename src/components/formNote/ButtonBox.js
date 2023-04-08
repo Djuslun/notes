@@ -22,4 +22,5 @@ const ButtonBox = ({ noteId, edit, handleDelete, handleOpen, handleEdit }) => {
       : null}
   </div >
 }
+
 export default ButtonBox

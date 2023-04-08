@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { createNote, changeNote } from '../../redux/actions'
 import { useDispatch } from "react-redux";
 import uniqid from 'uniqid'
-import MultiSelect from "./CustomSelect";
+import CustomSelect from "./CustomSelect";
 import { CustomField } from "./CustomField";
 import { tagOptions } from "../../redux/reducer";
 import ButtonBox from "./ButtonBox";
@@ -68,7 +68,7 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
         <CustomField
           label={'Note tags'}
           name='tags'
-          component={MultiSelect}
+          component={CustomSelect}
           id='tags'
           edit={edit}
           noteId={noteId}
