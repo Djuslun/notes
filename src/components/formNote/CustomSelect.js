@@ -7,60 +7,43 @@ const CustomSelect = ({
   isMulti = false,
   placeholder,
   InputProps,
-  disabled
+  disabled,
+  maxMenuHeight
 }) => {
-  const onChange = (option) => {
+  const onChange = (option = []) => {
     form.setFieldValue(
       field.name,
-      option ? (option).map((item) => item.value) : [],
-    );
+      isMulti ? (option).map((item) => item.value) : option.value,
+    )
+    InputProps?.(option)
   }
 
   const getValue = () => {
-    if (options) {
-      return isMulti
-        ? options.filter((option) => field.value.indexOf(option.value) >= 0)
-        : options.find((option) => option.value === field.value);
-    } else {
-      return isMulti ? [] : ('');
-    }
+    return isMulti
+      ? options.filter((option = []) => field.value.indexOf(option.value) >= 0)
+      : options.find((option = []) => option.value === field.value);
   };
 
-  if (!isMulti) {
-    return (
+
+  return (
+    <>
       <Select
-        options={options}
+        className="react-select-container"
+        classNamePrefix="react-select"
         name={field.name}
-        value={options ? options.find(option => option.value === field.value) : ''}
-        onChange={(option) => {
-          form.setFieldValue(field.name, option.value)
-          InputProps?.(option)
-        }}
+        value={getValue()}
+        onChange={onChange}
         onBlur={field.onBlur}
+        inputId={field.name}
+        options={options}
         placeholder={placeholder}
+        isMulti={isMulti}
+        closeMenuOnSelect={!isMulti}
+        isDisabled={disabled}
+        maxMenuHeight={maxMenuHeight}
       />
-    )
-  } else {
-    return (
-      <>
-        <Select
-          className="react-select-container"
-          classNamePrefix="react-select"
-          name={field.name}
-          value={getValue()}
-          onChange={onChange}
-          onBlur={field.onBlur}
-          inputId={field.name}
-          options={options}
-          isMulti={true}
-          closeMenuOnSelect={false}
-          placeholder={placeholder}
-          isDisabled={disabled}
-          maxMenuHeight={'70px'}
-        />
-      </>
-    )
-  }
+    </>
+  )
 }
 
 export default CustomSelect;
