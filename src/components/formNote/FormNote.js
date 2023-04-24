@@ -1,20 +1,40 @@
+import { useHttp } from '../../hooks/http.hook'
 import { useState } from "react";
-import { Form, Formik, Field } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from 'yup'
-import { createNote, changeNote } from '../../redux/actions'
+import { notesCreate, notesChange } from '../../redux/notes.Slice'
 import { useDispatch } from "react-redux";
 import uniqid from 'uniqid'
 import CustomSelect from "./CustomSelect";
 import { CustomField } from "./CustomField";
-import { tagOptions } from "../../redux/reducer";
-import ButtonBox from "./ButtonBox";
+import { tagOptions } from "../../redux/notes.Slice";
+import ButtonBox from "../buttons/ButtonBox";
 import './FormNote.scss'
 
 const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, handleDelete }) => {
+  const { request } = useHttp()
+  const isNote = !!noteId
+
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
 
   const handleEdit = () => setEdit(!edit)
+
+  const handleSubmit = ({ title, description, tags }, { resetForm }) => {
+    if (isNote) {
+      const newNote = { title, description, id: noteId, tags }
+      request(`http://localhost:3001/notes/${noteId}`, 'PUT', JSON.stringify(newNote))
+        .then(dispatch(notesChange({ id: noteId, changes: { title, description, tags } })))
+        .catch((e) => console.log(e))
+    }
+    else {
+      const newNote = { title, description, id: uniqid(), tags }
+      request("http://localhost:3001/notes", 'POST', JSON.stringify(newNote))
+        .then(data => dispatch(notesCreate(data)))
+        .catch((e) => console.log(e))
+      resetForm();
+    }
+  }
 
   return (
     <Formik
@@ -35,20 +55,13 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
           .min(0, ''),
         tags: Yup
           .array()
-          .min(1, 'At least one tag'),
+          .min(1, 'At least one tag')
+          .max(3, 'Max 3 tag'),
       })}
-      onSubmit={({ title, description, tags }, { resetForm }) => {
-        if (noteId) {
-          dispatch(changeNote(title, description, noteId, tags))
-        }
-        else {
-          dispatch(createNote(title, description, uniqid(), tags))
-          resetForm();
-        }
-      }}
+      onSubmit={handleSubmit}
     >
       <Form className="form-note">
-        <h2 className="form-note__title title">{noteId ? 'Note' : 'Add note'}</h2>
+        <h2 className="form-note__title title">{isNote ? 'Note' : 'Add note'}</h2>
         <CustomField
           label={'Note title'}
           name='title'
@@ -62,6 +75,7 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
           name="description"
           as='textarea'
           id='description'
+          className={'form-note__description-field'}
           edit={edit}
           noteId={noteId}
         />
@@ -75,9 +89,10 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
           placeholder='Select tags'
           isMulti={true}
           options={tagOptions}
+          maxMenuHeight={'65px'}
         />
         <ButtonBox
-          noteId={noteId}
+          isNote={isNote}
           edit={edit}
           handleDelete={handleDelete}
           handleOpen={handleOpen}
