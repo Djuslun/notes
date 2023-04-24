@@ -1,0 +1,11 @@
+{
+  "server": {
+    "routes": {
+      "/api/*": {
+        "cors": {
+          "origin": "*"
+        }
+      }
+    }
+  }
+}
