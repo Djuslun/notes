@@ -11,7 +11,7 @@ const Note = ({ title, description, tags, id: noteId, handleOpen }) => {
   const dispatch = useDispatch()
 
   const handleDelete = useCallback(() => {
-    request(`http://localhost:3001/notes/${noteId}`, 'DELETE')
+    request(`https://precious-deer-cuff-links.cyclic.app/notes/${noteId}`, 'DELETE')
       .then(dispatch(notesDelete(noteId)))
       .catch((e) => console.log(e))
   }, [noteId])
