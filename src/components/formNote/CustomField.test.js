@@ -2,11 +2,11 @@ import React from 'react'
 import { CustomField } from './CustomField'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 describe('CustomField', () => {
-  test('renders a label', async () => {
+  test('renders a label', () => {
     render(
       <Formik
         initialValues={{
@@ -75,10 +75,12 @@ describe('CustomField', () => {
       </Formik>
     )
 
-    const submitButton = screen.getByRole('button', { name: 'Submit' })
-    submitButton.click()
+    await act(async () => {
+      const submitButton = screen.getByRole('button', { name: 'Submit' })
+      submitButton.click()
+    })
 
-    const errorMessage = await screen.findByText('Title is required')
+    const errorMessage = screen.getByText('Title is required')
     expect(errorMessage).toBeInTheDocument()
   })
 

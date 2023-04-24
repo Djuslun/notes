@@ -1,15 +1,15 @@
 import { useDispatch } from 'react-redux';
-import { changeFilter } from '../../redux/actions';
 import { Form, Formik, Field } from "formik";
+import { filtersChange } from '../../redux/notes.Slice';
 import * as Yup from 'yup'
 import CustomSelect from "../formNote/CustomSelect";
-import { tagOptions } from "../../redux/reducer";
+import { tagOptions } from "../../redux/notes.Slice";
 import './search-panel.scss';
 
 const SearchPanel = () => {
   const dispatch = useDispatch()
 
-  const onFilterValueChange = (filter) => dispatch(changeFilter(filter.value))
+  const onFilterValueChange = (filter) => dispatch(filtersChange(filter.value))
 
   return (
     <Formik

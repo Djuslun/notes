@@ -1,17 +1,17 @@
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useCallback, useMemo, memo } from 'react';
 import Note from '../note/Note';
 import './noteListItem.scss';
 import Portal from '../note/Portal';
 import NoteListItemView from './NoteListItemView';
 
-const NoteListItem = ({ id: noteId }) => {
+const NoteListItem = ({ id, title, description, tags }) => {
   const [open, setOpen] = useState(false)
-  const { title, description, id, tags } = useSelector(({ notes }) => notes[noteId])
 
-  const handleOpen = () => setOpen(!open)
+  const handleOpen = useCallback(() => setOpen(open => !open), [])
 
-  const tagsElem = tags.map((tag, index) => (<div className='note-li__tag' key={index}>{tag}</div>))
+  const tagsElem = useMemo(() => {
+    return tags.map((tag, index) => (<div className='note-li__tag' key={index}>{tag}</div>), [tags])
+  })
 
   return (
     <>
@@ -36,4 +36,4 @@ const NoteListItem = ({ id: noteId }) => {
 }
 
 
-export default NoteListItem;
+export default memo(NoteListItem);

@@ -19,4 +19,5 @@ const Portal = ({ children }) => {
 
   return ReactDOM.createPortal(children, container)
 }
+
 export default Portal

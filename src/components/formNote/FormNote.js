@@ -1,16 +1,18 @@
-import { useState, useCallback } from "react";
+import { useHttp } from '../../hooks/http.hook'
+import { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from 'yup'
-import { createNote, changeNote } from '../../redux/actions'
+import { notesCreate, notesChange } from '../../redux/notes.Slice'
 import { useDispatch } from "react-redux";
 import uniqid from 'uniqid'
 import CustomSelect from "./CustomSelect";
 import { CustomField } from "./CustomField";
-import { tagOptions } from "../../redux/reducer";
+import { tagOptions } from "../../redux/notes.Slice";
 import ButtonBox from "../buttons/ButtonBox";
 import './FormNote.scss'
 
 const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, handleDelete }) => {
+  const { request } = useHttp()
   const isNote = !!noteId
 
   const [edit, setEdit] = useState(false);
@@ -18,15 +20,21 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
 
   const handleEdit = () => setEdit(!edit)
 
-  const handleSubmit = useCallback(({ title, description, tags }, { resetForm }) => {
+  const handleSubmit = ({ title, description, tags }, { resetForm }) => {
     if (isNote) {
-      dispatch(changeNote(title, description, noteId, tags))
+      const newNote = { title, description, id: noteId, tags }
+      request(`http://localhost:3001/notes/${noteId}`, 'PUT', JSON.stringify(newNote))
+        .then(dispatch(notesChange({ id: noteId, changes: { title, description, tags } })))
+        .catch((e) => console.log(e))
     }
     else {
-      dispatch(createNote(title, description, uniqid(), tags))
+      const newNote = { title, description, id: uniqid(), tags }
+      request("http://localhost:3001/notes", 'POST', JSON.stringify(newNote))
+        .then(data => dispatch(notesCreate(data)))
+        .catch((e) => console.log(e))
       resetForm();
     }
-  }, [noteId])
+  }
 
   return (
     <Formik
@@ -47,7 +55,8 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
           .min(0, ''),
         tags: Yup
           .array()
-          .min(1, 'At least one tag'),
+          .min(1, 'At least one tag')
+          .max(3, 'Max 3 tag'),
       })}
       onSubmit={handleSubmit}
     >

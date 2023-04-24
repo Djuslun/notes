@@ -10,7 +10,7 @@ const CustomSelect = ({
   disabled,
   maxMenuHeight
 }) => {
-  const onChange = (option = []) => {
+  const handleChange = (option = []) => {
     form.setFieldValue(
       field.name,
       isMulti ? (option).map((item) => item.value) : option.value,
@@ -20,29 +20,26 @@ const CustomSelect = ({
 
   const getValue = () => {
     return isMulti
-      ? options.filter((option = []) => field.value.indexOf(option.value) >= 0)
+      ? options.filter((option = []) => field.value && field.value.indexOf(option.value) >= 0)
       : options.find((option = []) => option.value === field.value);
   };
 
-
   return (
-    <>
-      <Select
-        className="react-select-container"
-        classNamePrefix="react-select"
-        name={field.name}
-        value={getValue()}
-        onChange={onChange}
-        onBlur={field.onBlur}
-        inputId={field.name}
-        options={options}
-        placeholder={placeholder}
-        isMulti={isMulti}
-        closeMenuOnSelect={!isMulti}
-        isDisabled={disabled}
-        maxMenuHeight={maxMenuHeight}
-      />
-    </>
+    <Select
+      className="react-select-container"
+      classNamePrefix="react-select"
+      name={field.name}
+      value={getValue()}
+      onChange={handleChange}
+      onBlur={field.onBlur}
+      inputId={field.name}
+      options={options}
+      placeholder={placeholder}
+      isMulti={isMulti}
+      closeMenuOnSelect={!isMulti}
+      isDisabled={disabled}
+      maxMenuHeight={maxMenuHeight}
+    />
   )
 }
 
