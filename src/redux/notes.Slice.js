@@ -19,7 +19,7 @@ export const fetchNotes = createAsyncThunk(
   'notes/fetchNotes',
   () => {
     const { request } = useHttp();
-    return request("https://precious-deer-cuff-links.cyclic.app/notes")
+    return request("https://cautious-tuna-nightshirt.cyclic.app/api/notes")
   }
 )
 

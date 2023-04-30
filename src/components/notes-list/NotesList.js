@@ -8,9 +8,9 @@ const NotesList = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(fetchNotes())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchNotes())
+  // }, [])
 
   const notes = useSelector(selectAll)
   const { filter } = useSelector(store => store.notes)

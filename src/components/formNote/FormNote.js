@@ -22,16 +22,18 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
 
   const handleSubmit = ({ title, description, tags }, { resetForm }) => {
     if (isNote) {
-      const newNote = { title, description, id: noteId, tags }
-      request(`https://precious-deer-cuff-links.cyclic.app/notes/${noteId}`, 'PUT', JSON.stringify(newNote))
-        .then(dispatch(notesChange({ id: noteId, changes: { title, description, tags } })))
-        .catch((e) => console.log(e))
+      // const newNote = { title, description, id: noteId, tags }
+      // request(`https://cautious-tuna-nightshirt.cyclic.app/api/notes/${noteId}`, 'PUT', JSON.stringify(newNote))
+      //   .then(dispatch(notesChange({ id: noteId, changes: { title, description, tags } })))
+      //   .catch((e) => console.log(e))
+      dispatch(notesChange({ id: noteId, changes: { title, description, tags } }))
     }
     else {
       const newNote = { title, description, id: uniqid(), tags }
-      request("https://precious-deer-cuff-links.cyclic.app/notes", 'POST', JSON.stringify(newNote))
-        .then(data => dispatch(notesCreate(data)))
-        .catch((e) => console.log(e))
+      // request("https://cautious-tuna-nightshirt.cyclic.app/api/notes", 'POST', JSON.stringify(newNote))
+      //   .then(data => dispatch(notesCreate(data)))
+      //   .catch((e) => console.log(e))
+      dispatch(notesCreate(newNote))
       resetForm();
     }
   }
