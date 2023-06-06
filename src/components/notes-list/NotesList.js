@@ -5,12 +5,7 @@ import NoteListItem from '../note-list-item/NoteListItem';
 import './notes-list.scss';
 
 const NotesList = () => {
-
   const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch(fetchNotes())
-  // }, [])
 
   const notes = useSelector(selectAll)
   const { filter } = useSelector(store => store.notes)
