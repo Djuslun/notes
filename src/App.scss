@@ -1,0 +1,11 @@
+.view {
+  // max-height: 80vh;
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .view {
+    flex-direction: column;
+  }
+}

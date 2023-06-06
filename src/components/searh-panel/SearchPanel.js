@@ -1,32 +1,42 @@
-import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeFilter } from '../../redux/actions';
-import { Button } from '@mui/material';
+import { Form, Formik, Field } from "formik";
+import { filtersChange } from '../../redux/notes.Slice';
+import * as Yup from 'yup'
+import CustomSelect from "../formNote/CustomSelect";
+import { tagOptions } from "../../redux/notes.Slice";
 import './search-panel.scss';
 
 const SearchPanel = () => {
-  const inputRef = useRef()
   const dispatch = useDispatch()
 
-  const onFilterValueChange = () => {
-    const newFilter = inputRef.current.value
-    dispatch(changeFilter(newFilter))
-  }
+  const onFilterValueChange = (filter) => dispatch(filtersChange(filter.value))
 
   return (
-    <div className="search-panel">
-      <input
-        ref={inputRef}
-        className='search-panel__input'
-        placeholder='Search note' />
-      <Button
-        className='search-panel__button'
-        variant="contained"
-        color="success"
-        onClick={onFilterValueChange} >
-        Search
-      </Button>
-    </div>
+    <Formik
+      initialValues={{
+        filter: '',
+      }}
+      validationSchema={Yup.object({
+        filter: Yup
+          .string()
+      })}
+      onSubmit={values => console.log(values)}
+    >
+      <Form className="search-form">
+        <Field
+          name='filter'
+          id='filter'
+          placeholder='Filter'
+          isMulti={false}
+          component={CustomSelect}
+          options={[
+            { value: 'all', label: 'All' },
+            ...tagOptions
+          ]}
+          InputProps={onFilterValueChange}
+        />
+      </Form>
+    </Formik>
   )
 }
 

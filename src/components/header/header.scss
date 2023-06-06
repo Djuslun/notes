@@ -1,10 +1,12 @@
+@import '../../styles/var';
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
   margin-bottom: 20px;
-  background-color: #aaa;
+  background-color: $blue;
   border-radius: 4px;
   box-shadow: 15px 15px 30px rgba(0, 0, 0, .15);
   color: #fff;

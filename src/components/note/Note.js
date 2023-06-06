@@ -1,53 +1,33 @@
-import { useDispatch } from 'react-redux';
-import { deleteNote, changeEdit } from '../../redux/actions';
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Editable from '../editable/Editable';
-import Tag from '../tag/Tag';
-import { styledTags } from '../../servises/styledTag';
+import './note.scss'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import { notesDelete } from '../../redux/notes.Slice'
+import FormNote from '../formNote/FormNote'
+import { useHttp } from '../../hooks/http.hook'
 
-import './note.scss';
-
-const Note = ({ note, id, tags, edit }) => {
+const Note = ({ title, description, tags, id: noteId, handleOpen }) => {
+  const { request } = useHttp()
 
   const dispatch = useDispatch()
 
-  const editChange = () => dispatch(changeEdit(id, !edit))
-
-  const onDeleteNote = () => dispatch(deleteNote(id))
-
-  const tagList = tags.map((item, index) => <Tag tag={item} key={index} id={id} />)
-
-  const styledNote = styledTags(note, edit)
+  const handleDelete = useCallback(() => {
+    // request(`https://cautious-tuna-nightshirt.cyclic.app/api/notes/${noteId}`, 'DELETE')
+    //   .then(dispatch(notesDelete(noteId)))
+    //   .catch((e) => console.log(e))
+    dispatch(notesDelete(noteId))
+  }, [noteId])
 
   return (
-    <li className="note">
-      <div className="note__body">
-        <Editable
-          edit={edit}
-          note={styledNote}
-          id={id}
-        />
-        <div className='note__buttons'>
-          <IconButton
-            className='delete-button'
-            aria-label="delete"
-            onClick={onDeleteNote}>
-            <DeleteIcon />
-          </IconButton>
-          <button
-            type="button"
-            className='edit-button'
-            onClick={editChange}>
-            {edit ? 'Edit' : 'Ok'}
-          </button>
-        </div>
-      </div>
-      <div className="note__tags">
-        {tagList}
-      </div>
-    </li>
+    <div className='note'>
+      <FormNote
+        title={title}
+        description={description}
+        tags={tags}
+        noteId={noteId}
+        handleOpen={handleOpen}
+        handleDelete={handleDelete} />
+    </div>
   )
 }
 
-export default Note;
+export default Note
