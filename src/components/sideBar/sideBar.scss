@@ -1,5 +1,5 @@
 .aside {
-  padding: 20px 0 0 0;
+  padding: 20px 0;
   height: auto;
   width: 50px;
   background-color: rgba(87, 87, 172, 0.918);
@@ -21,10 +21,10 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-  }
-}
 
-.active {
-  background-color: rgba(255, 255, 255, 0.2);
+    &--active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+  }
 }

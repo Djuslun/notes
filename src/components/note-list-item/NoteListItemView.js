@@ -1,10 +1,9 @@
 
-const NoteListItemView = ({ title, tagsElem, handleOpen }) => {
+const NoteListItemView = ({ title, tagsElem }) => {
   return (
     <li
       className="note-li"
-      tabIndex={0}
-      onClick={handleOpen}>
+      tabIndex={0}>
       <p
         className='note-li__title' >
         {title}

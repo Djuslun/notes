@@ -5,4 +5,13 @@
 
 .view {
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+  background-color: rgba(87, 87, 172, 0.918);
+  border-radius: 4px;
+}
+
+.main {
+  flex: 1 1 auto;
 }

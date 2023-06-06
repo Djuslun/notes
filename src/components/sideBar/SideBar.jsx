@@ -2,24 +2,26 @@ import { AiFillEdit } from 'react-icons/ai'
 import { MdDashboard } from 'react-icons/md'
 import { VscGraph } from 'react-icons/vsc'
 import { FiSettings } from 'react-icons/fi'
+import { NavLink } from 'react-router-dom';
 import './sideBar.scss'
 
 const SideBar = ({ }) => {
+  const activeClass = ({ isActive }) => isActive ? "aside__icon-wrapper aside__icon-wrapper--active" : "aside__icon-wrapper"
 
   return (
     <aside className='aside'>
-      <div className="aside__icon-wrapper active">
+      <NavLink to={'/'} className={activeClass}>
         <VscGraph color='white' className='aside__icon' />
-      </div>
-      <div className="aside__icon-wrapper">
+      </NavLink>
+      <NavLink to={'/new-note'} className={activeClass}>
         <AiFillEdit color='white' className='aside__icon' />
-      </div>
-      <div className="aside__icon-wrapper">
+      </NavLink>
+      <NavLink to={'/notes'} className={activeClass}>
         <MdDashboard color='white' className='aside__icon' />
-      </div>
-      <div className="aside__icon-wrapper">
+      </NavLink>
+      <NavLink to={'/settings'} className={activeClass}>
         <FiSettings color='white' className='aside__icon' />
-      </div>
+      </NavLink>
     </aside>
   )
 }
