@@ -57,6 +57,6 @@ const { actions, reducer } = notesSlice
 
 export default reducer
 
-export const { selectAll } = notesAdapter.getSelectors(state => state.notes)
+export const { selectAll, selectById } = notesAdapter.getSelectors(state => state.notes)
 
 export const { notesCreate, notesDelete, notesChange, filtersChange } = actions

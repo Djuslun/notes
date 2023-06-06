@@ -1,22 +1,6 @@
-.wrapper {
-  position: fixed;
-  top: 50vh;
-  left: 0;
-  transform: translate(0%, -50%);
-  width: 100vw;
-  height: 100vh;
-  background: #1b1d1be0;
-  z-index: 1;
-}
-
 .note {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 1;
   background: #ffffff;
   color: #000000;
@@ -33,11 +17,5 @@
 
   &__tag {
     margin-right: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .note {
-    width: 90%;
   }
 }
