@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux"
 import { selectAll } from '../../redux/notes.Slice'
-import { PieChart, Pie, Tooltip, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
 import { tagOptions } from "../../redux/notes.Slice";
 import { getLastWeek } from "../../utils/getLastWeek";
+import CustomPieChart from "../../components/customPieChart/PieChart";
+import CustomBarChart from "../../components/customBarChart/CustomBarChart";
+import './dashBoard.scss'
 
 const DashBoard = ({ }) => {
   const notes = useSelector(selectAll)
@@ -11,12 +13,6 @@ const DashBoard = ({ }) => {
       name: tag.label,
       value: notes.filter(item => item.tags.includes(tag.label)).length
     }
-  })
-
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-  const list = data.map((item, index) => {
-    return <li style={{ 'color': `${COLORS[index]}` }}>{`${item.name}: ${item.value}`}</li>
   })
 
   const lastWeek = getLastWeek()
@@ -28,46 +24,12 @@ const DashBoard = ({ }) => {
     }
   })
 
-
-
   return (
-    <>
-      <h1>{`Всего заметок: ${notes.length}`}</h1>
-      <PieChart width={200} height={200}>
-        <Pie
-          dataKey="value"
-          data={data}
-          cx="50%"
-          cy="50%"
-          outerRadius={80}
-          fill="#afafaf"
-          label={''} >
-          {data.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
-      <ul>
-        {list}
-      </ul>
-      <BarChart
-        width={500}
-        height={300}
-        data={dataWeek}
-        margin={{
-          top: 10,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      ><CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" stroke="#fff" />
-        <YAxis tickCount={4} interval={0} domain={[0, Math.max(Math.max(...dataWeek.map(item => item.notes)), 2)]} stroke="#fff" />
-        <Tooltip />
-        <Bar dataKey="notes" fill="#aa0000" />
-      </BarChart>
-    </>
+    <div className="dashboard">
+      <h1 className="dashboard__title">{`Всего заметок: ${notes.length}`}</h1>
+      <CustomPieChart data={data} className="dashboard__pie" />
+      <CustomBarChart dataWeek={dataWeek} className="dashboard__bar" />
+    </div>
   )
 }
 

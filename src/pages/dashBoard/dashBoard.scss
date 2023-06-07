@@ -1,0 +1,22 @@
+.dashboard {
+  padding: 20px;
+  display: grid;
+  grid-template-areas: 'title title'
+    'pie bar';
+
+  &__title {
+    font-size: 24px;
+    color: #fff;
+    grid-area: title;
+  }
+
+  &__bar {
+    grid-area: bar;
+  }
+
+  &__pie {
+    grid-area: pie;
+    display: flex;
+    align-items: center;
+  }
+}
