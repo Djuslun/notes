@@ -19,6 +19,17 @@ const DashBoard = ({ }) => {
     return <li style={{ 'color': `${COLORS[index]}` }}>{`${item.name}: ${item.value}`}</li>
   })
 
+  const lastWeek = getLastWeek()
+
+  const dataWeek = lastWeek.map(day => {
+    return {
+      name: day,
+      notes: notes.filter(note => note.createAt === day).length,
+    }
+  })
+
+
+
   return (
     <>
       <h1>{`Всего заметок: ${notes.length}`}</h1>
@@ -37,7 +48,25 @@ const DashBoard = ({ }) => {
         </Pie>
         <Tooltip />
       </PieChart>
-      {list}
+      <ul>
+        {list}
+      </ul>
+      <BarChart
+        width={500}
+        height={300}
+        data={dataWeek}
+        margin={{
+          top: 10,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      ><CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" stroke="#fff" />
+        <YAxis tickCount={4} interval={0} domain={[0, Math.max(Math.max(...dataWeek.map(item => item.notes)), 2)]} stroke="#fff" />
+        <Tooltip />
+        <Bar dataKey="notes" fill="#aa0000" />
+      </BarChart>
     </>
   )
 }

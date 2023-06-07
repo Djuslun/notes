@@ -10,10 +10,19 @@ import { tagOptions } from "../../redux/notes.Slice";
 import ButtonBox from "../buttons/ButtonBox";
 import './FormNote.scss'
 
+const getTodayDate = () => {
+  const today = new Date();
+  const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+  return today.toLocaleDateString('ru-RU', options);
+}
+
 const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, handleDelete }) => {
   const isNote = !!noteId
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
+
+  const todayDate = getTodayDate();
+  console.log(todayDate)
 
   const handleEdit = () => setEdit(!edit)
 
@@ -22,7 +31,7 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
       dispatch(notesChange({ id: noteId, changes: { title, description, tags } }))
     }
     else {
-      const newNote = { title, description, id: uniqid(), tags }
+      const newNote = { title, description, id: uniqid(), tags, createAt: todayDate }
       dispatch(notesCreate(newNote))
       resetForm();
     }
