@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Notes from './pages/notes/Notes';
 import NewNote from './pages/newNote/NewNote';
 import DashBoard from './pages/dashBoard/DashBoard';
-import Note from './components/note/Note';
+import Note from './pages/note/Note';
 import NotFoundPage from './pages/notFoundPage/NotFoundPage'
 import './App.scss';
 
