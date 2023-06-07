@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 
 const Note = ({ }) => {
   const { id: noteId } = useParams()
-  const { title, description, tags } = useSelector(state => selectById(state, noteId)) || {}
+  const { title, description, tags } = useSelector(state => selectById(state, noteId)) || {} // || {} нужен для случаев если useSelector вепнет undefined, т.к. деструктуризация выдаст ошибку
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -19,6 +19,7 @@ const Note = ({ }) => {
   }, [title, tags])
 
   const handleDelete = useCallback(() => {
+    navigate('/notes')
     dispatch(notesDelete(noteId))
   }, [noteId])
 
