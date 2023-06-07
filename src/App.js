@@ -1,4 +1,3 @@
-import Header from './components/header/Header';
 import SideBar from './components/sideBar/SideBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Notes from './pages/notes/Notes';
@@ -14,7 +13,6 @@ function App() {
       <div className="App">
         <SideBar />
         <div className="view">
-          <Header />
           <main className="main">
             <Routes>
               <Route path='/' element={<DashBoard />} />
