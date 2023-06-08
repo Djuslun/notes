@@ -1,8 +1,10 @@
 .dashboard {
   padding: 20px;
   display: grid;
-  grid-template-areas: 'title title'
+  grid-template-areas:
+    'title title'
     'pie bar';
+  grid-template-rows: minmax(100px, auto) 1fr;
 
   &__title {
     font-size: 24px;

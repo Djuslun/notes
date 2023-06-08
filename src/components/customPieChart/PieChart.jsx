@@ -8,13 +8,13 @@ const CustomPieChart = ({ data, className }) => {
 
   return (
     <div className={className}>
-      <PieChart width={200} height={200}>
+      <PieChart width={300} height={300}>
         <Pie
           dataKey="value"
           data={data}
           cx="50%"
           cy="50%"
-          outerRadius={80}
+          outerRadius={'100%'}
           fill="#afafaf"
           label={''} >
           {data.map((_, index) => (
