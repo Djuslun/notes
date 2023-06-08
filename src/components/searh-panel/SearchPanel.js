@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Formik, Field } from "formik";
 import { filtersChange } from '../../redux/notes.Slice';
 import * as Yup from 'yup'
@@ -11,10 +12,18 @@ const SearchPanel = () => {
 
   const onFilterValueChange = (filter) => dispatch(filtersChange(filter.value))
 
+  useEffect(() => {
+    return () => {
+      onFilterValueChange({ value: 'all' })
+    }
+  }, [])
+
+  const { filter } = useSelector(store => store.notes)
+
   return (
     <Formik
       initialValues={{
-        filter: '',
+        filter: filter,
       }}
       validationSchema={Yup.object({
         filter: Yup
@@ -33,7 +42,7 @@ const SearchPanel = () => {
             { value: 'all', label: 'All' },
             ...tagOptions
           ]}
-          InputProps={onFilterValueChange}
+          onFilterValueChange={onFilterValueChange}
         />
       </Form>
     </Formik>

@@ -6,16 +6,16 @@ const CustomSelect = ({
   options,
   isMulti = false,
   placeholder,
-  InputProps,
+  onFilterValueChange,
   disabled,
-  maxMenuHeight
+  maxMenuHeight,
 }) => {
   const handleChange = (option = []) => {
     form.setFieldValue(
       field.name,
       isMulti ? (option).map((item) => item.value) : option.value,
     )
-    InputProps?.(option)
+    onFilterValueChange?.(option)
   }
 
   const getValue = () => {
