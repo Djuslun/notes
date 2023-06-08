@@ -5,7 +5,7 @@ import Header from "../../components/header/Header"
 
 const Notes = ({ }) => {
   const notes = useSelector(selectAll)
-  const { filter } = useSelector(store => store.notes)
+  const { filter } = useSelector(store => store.filters)
 
   const getVisibleNotes = (filter) => {
     if (filter === 'all') {

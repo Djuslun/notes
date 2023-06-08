@@ -3,28 +3,28 @@ import { useHttp } from '../hooks/http.hook'
 
 const notesAdapter = createEntityAdapter()
 
-export const tagOptions = [
-  { value: 'Work', label: 'Work' },
-  { value: 'Home', label: 'Home' },
-  { value: 'Hobby', label: 'Hobby' },
-  { value: 'Books', label: 'Books' }
-]
+// export const tagOptions = [
+//   { value: 'Work', label: 'Work' },
+//   { value: 'Home', label: 'Home' },
+//   { value: 'Hobby', label: 'Hobby' },
+//   { value: 'Books', label: 'Books' }
+// ]
 
-export const allTags = tagOptions.reduce((acc, tag) => {
-  acc[tag.value] = []
-  return acc
-}, {})
+// export const allTags = tagOptions.reduce((acc, tag) => {
+//   acc[tag.value] = []
+//   return acc
+// }, {})
 
-export const fetchNotes = createAsyncThunk(
-  'notes/fetchNotes',
-  () => {
-    const { request } = useHttp();
-    return request("https://cautious-tuna-nightshirt.cyclic.app/api/notes")
-  }
-)
+// export const fetchNotes = createAsyncThunk(
+//   'notes/fetchNotes',
+//   () => {
+//     const { request } = useHttp();
+//     return request("https://cautious-tuna-nightshirt.cyclic.app/api/notes")
+//   }
+// )
 
 const initialState = notesAdapter.getInitialState({
-  filter: 'all'
+  // filter: 'all'
 })
 
 const notesSlice = createSlice({
@@ -40,15 +40,15 @@ const notesSlice = createSlice({
     notesChange: (state, action) => {
       notesAdapter.updateOne(state, action.payload)
     },
-    filtersChange: (state, action) => {
-      state.filter = action.payload
-    },
+    // filtersChange: (state, action) => {
+    //   state.filter = action.payload
+    // },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchNotes.fulfilled, (state, action) => {
-        notesAdapter.setAll(state, action.payload)
-      })
+      // .addCase(fetchNotes.fulfilled, (state, action) => {
+      //   notesAdapter.setAll(state, action.payload)
+      // })
       .addDefaultCase(() => { })
   }
 })
@@ -59,4 +59,4 @@ export default reducer
 
 export const { selectAll, selectById } = notesAdapter.getSelectors(state => state.notes)
 
-export const { notesCreate, notesDelete, notesChange, filtersChange } = actions
+export const { notesCreate, notesDelete, notesChange } = actions

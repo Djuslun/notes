@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import { selectAll } from '../../redux/notes.Slice'
-import { tagOptions } from "../../redux/notes.Slice";
+import { tagOptions } from "../../redux/filters.Slice";
 import { getLastWeek } from "../../utils/getLastWeek";
 import CustomPieChart from "../../components/customPieChart/PieChart";
 import CustomBarChart from "../../components/customBarChart/CustomBarChart";

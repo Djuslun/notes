@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Formik, Field } from "formik";
-import { filtersChange } from '../../redux/notes.Slice';
+import { filtersChange, tagOptions } from '../../redux/filters.Slice';
 import * as Yup from 'yup'
 import CustomSelect from "../formNote/CustomSelect";
-import { tagOptions } from "../../redux/notes.Slice";
 import './search-panel.scss';
 
 const SearchPanel = () => {
@@ -18,7 +17,7 @@ const SearchPanel = () => {
     }
   }, [])
 
-  const { filter } = useSelector(store => store.notes)
+  const { filter } = useSelector(store => store.filters)
 
   return (
     <Formik
@@ -29,7 +28,7 @@ const SearchPanel = () => {
         filter: Yup
           .string()
       })}
-      onSubmit={values => console.log(values)}
+      onSubmit={(values) => console.log(values)}
     >
       <Form className="search-form">
         <Field

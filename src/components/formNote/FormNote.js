@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import uniqid from 'uniqid'
 import CustomSelect from "./CustomSelect";
 import { CustomField } from "./CustomField";
-import { tagOptions } from "../../redux/notes.Slice";
+import { tagOptions } from "../../redux/filters.Slice";
 import ButtonBox from "../buttons/ButtonBox";
 import './FormNote.scss'
 
@@ -22,7 +22,6 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
   const dispatch = useDispatch()
 
   const todayDate = getTodayDate();
-  console.log(todayDate)
 
   const handleEdit = () => setEdit(!edit)
 
