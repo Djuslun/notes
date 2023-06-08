@@ -1,4 +1,5 @@
 import FormNote from "../../components/formNote/FormNote"
+import FormTag from "../../components/formTag/FormTag"
 
 const NewNote = ({ }) => {
 
@@ -9,6 +10,7 @@ const NewNote = ({ }) => {
         description=''
         tags={[]}
       />
+      <FormTag />
     </>
   )
 }

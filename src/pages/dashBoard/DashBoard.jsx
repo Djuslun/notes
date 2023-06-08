@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import { selectAll } from '../../redux/notes.Slice'
-import { tagOptions } from "../../redux/filters.Slice";
+import { selectAll as selectAllFilter } from '../../redux/filters.Slice'
 import { getLastWeek } from "../../utils/getLastWeek";
 import CustomPieChart from "../../components/customPieChart/PieChart";
 import CustomBarChart from "../../components/customBarChart/CustomBarChart";
@@ -8,6 +8,7 @@ import './dashBoard.scss'
 
 const DashBoard = ({ }) => {
   const notes = useSelector(selectAll)
+  const tagOptions = useSelector(selectAllFilter)
   const data = tagOptions.map(tag => {
     return {
       name: tag.label,

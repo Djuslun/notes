@@ -1,7 +1,7 @@
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
+import { COLORS } from '../../utils/consts'
 
 const CustomPieChart = ({ data, className }) => {
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
   const list = data.map((item, index) => {
     return <li style={{ 'color': `${COLORS[index]}` }}>{`${item.name}: ${item.value}`}</li>
   })

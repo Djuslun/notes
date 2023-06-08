@@ -5,9 +5,19 @@ import NewNote from './pages/newNote/NewNote';
 import DashBoard from './pages/dashBoard/DashBoard';
 import Note from './pages/note/Note';
 import NotFoundPage from './pages/notFoundPage/NotFoundPage'
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { filtersSet } from './redux/filters.Slice';
+import { tagOptions } from './utils/consts';
 import './App.scss';
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(filtersSet(tagOptions))
+  }, [])
+
   return (
     <BrowserRouter>
       <div className="App">

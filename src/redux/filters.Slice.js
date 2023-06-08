@@ -1,25 +1,27 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 
-const notesAdapter = createEntityAdapter()
+const filtersAdapter = createEntityAdapter()
 
-export const tagOptions = [
-  { value: 'Work', label: 'Work' },
-  { value: 'Home', label: 'Home' },
-  { value: 'Hobby', label: 'Hobby' },
-  { value: 'Books', label: 'Books' }
-]
-
-const initialState = notesAdapter.getInitialState({
+const initialState = filtersAdapter.getInitialState({
   filter: 'all'
 })
 
-const notesSlice = createSlice({
+const filtersSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
+    filtersSet: (state, action) => {
+      filtersAdapter.setAll(state, action.payload)
+    },
     filtersChange: (state, action) => {
       state.filter = action.payload
     },
+    filtersAdd: (state, action) => {
+      filtersAdapter.addOne(state, action.payload)
+    },
+    filtersDelete: (state, action) => {
+      filtersAdapter.removeMany(state, action.payload)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -27,10 +29,10 @@ const notesSlice = createSlice({
   }
 })
 
-const { actions, reducer: filters } = notesSlice
+const { actions, reducer: filters } = filtersSlice
 
 export default filters
 
-// export const { selectAll } = notesAdapter.getSelectors(state => state.filters)
+export const { selectAll } = filtersAdapter.getSelectors(state => state.filters)
 
-export const { filtersChange } = actions
+export const { filtersChange, filtersSet, filtersAdd, filtersDelete } = actions

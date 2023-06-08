@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from 'yup'
 import { notesCreate, notesChange } from '../../redux/notes.Slice'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import uniqid from 'uniqid'
-import CustomSelect from "./CustomSelect";
-import { CustomField } from "./CustomField";
-import { tagOptions } from "../../redux/filters.Slice";
+import CustomSelect from "../customForms/CustomSelect";
+import { CustomField } from "../customForms/CustomField";
+import { selectAll } from '../../redux/filters.Slice'
 import ButtonBox from "../buttons/ButtonBox";
 import './FormNote.scss'
 
@@ -20,7 +20,7 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
   const isNote = !!noteId
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
-
+  const tagOptions = useSelector(selectAll)
   const todayDate = getTodayDate();
 
   const handleEdit = () => setEdit(!edit)

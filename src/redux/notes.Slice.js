@@ -3,13 +3,6 @@ import { useHttp } from '../hooks/http.hook'
 
 const notesAdapter = createEntityAdapter()
 
-// export const tagOptions = [
-//   { value: 'Work', label: 'Work' },
-//   { value: 'Home', label: 'Home' },
-//   { value: 'Hobby', label: 'Hobby' },
-//   { value: 'Books', label: 'Books' }
-// ]
-
 // export const allTags = tagOptions.reduce((acc, tag) => {
 //   acc[tag.value] = []
 //   return acc
@@ -24,7 +17,6 @@ const notesAdapter = createEntityAdapter()
 // )
 
 const initialState = notesAdapter.getInitialState({
-  // filter: 'all'
 })
 
 const notesSlice = createSlice({
@@ -40,9 +32,6 @@ const notesSlice = createSlice({
     notesChange: (state, action) => {
       notesAdapter.updateOne(state, action.payload)
     },
-    // filtersChange: (state, action) => {
-    //   state.filter = action.payload
-    // },
   },
   extraReducers: (builder) => {
     builder
