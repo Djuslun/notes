@@ -3,7 +3,8 @@
   display: grid;
   grid-template-areas:
     'title title'
-    'pie bar';
+    'pie bar'
+    'notes notes';
   grid-template-rows: minmax(100px, auto) 1fr;
 
   &__title {
@@ -20,5 +21,9 @@
     grid-area: pie;
     display: flex;
     align-items: center;
+  }
+
+  &__notes {
+    grid-area: notes;
   }
 }

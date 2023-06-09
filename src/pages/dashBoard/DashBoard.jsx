@@ -4,6 +4,8 @@ import { selectAll as selectAllFilter } from '../../redux/filters.Slice'
 import { getLastWeek } from "../../utils/getLastWeek";
 import CustomPieChart from "../../components/customPieChart/PieChart";
 import CustomBarChart from "../../components/customBarChart/CustomBarChart";
+// import { getDate } from "../../utils/getDay";
+import NotesList from '../../components/notes-list/NotesList'
 import './dashBoard.scss'
 
 const DashBoard = ({ }) => {
@@ -21,7 +23,7 @@ const DashBoard = ({ }) => {
   const dataWeek = lastWeek.map(day => {
     return {
       name: day,
-      notes: notes.filter(note => note.createAt === day).length,
+      notes: notes.filter(note => note.createAt.split(',')[0] === day).length,
     }
   })
 
@@ -30,6 +32,7 @@ const DashBoard = ({ }) => {
       <h1 className="dashboard__title">{`Всего заметок: ${notes.length}`}</h1>
       <CustomPieChart data={data} className="dashboard__pie" />
       <CustomBarChart dataWeek={dataWeek} className="dashboard__bar" />
+      <NotesList notes={notes.slice(-3).reverse()} className='dashboard__notes' />
     </div>
   )
 }

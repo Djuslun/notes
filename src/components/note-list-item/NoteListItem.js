@@ -18,7 +18,7 @@ const NoteListItem = ({ id, title, tags }) => {
   const tagsElem = tags.map((tag, index) => (<div className='note-li__tag' key={index}>{tag}</div>))
 
   return (
-    <Link to={`${id}`}>
+    <Link to={`/notes/${id}`}>
       <NoteListItemView
         title={title}
         tagsElem={tagsElem} />

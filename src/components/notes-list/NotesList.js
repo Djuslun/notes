@@ -1,8 +1,8 @@
 import NoteListItem from '../note-list-item/NoteListItem';
 import './notes-list.scss';
 
-const NotesList = ({ visibleNotes }) => {
-  const notesList = visibleNotes.map(({ id, title, description, tags }) => (
+const NotesList = ({ notes, className = '' }) => {
+  const notesList = notes.map(({ id, title, description, tags }) => (
     < NoteListItem
       key={id}
       id={id}
@@ -12,7 +12,7 @@ const NotesList = ({ visibleNotes }) => {
 
 
   return (
-    <ul className="app-list">
+    <ul className={`app-list ${className}`}>
       {notesList.length
         ? <>{notesList}</>
         : <li className='app-list__title'>There are no notes</li>}

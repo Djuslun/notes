@@ -20,7 +20,7 @@ const Notes = ({ }) => {
   return (
     <>
       <Header />
-      <NotesList visibleNotes={visibleNotes} />
+      <NotesList notes={visibleNotes} />
     </>
   )
 }

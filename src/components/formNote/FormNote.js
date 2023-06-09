@@ -8,22 +8,17 @@ import CustomSelect from "../customForms/CustomSelect";
 import { CustomField } from "../customForms/CustomField";
 import { selectAll } from '../../redux/filters.Slice'
 import ButtonBox from "../buttons/ButtonBox";
+// import { getTodayDate } from "../../utils/getDay";
+import CustomMDEditor from "../customMDEditor/CustomMDEditor";
 import './FormNote.scss'
 
-import CustomMDEditor from "../customMDEditor/CustomMDEditor";
-
-const getTodayDate = () => {
-  const today = new Date();
-  const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
-  return today.toLocaleDateString('ru-RU', options);
-}
 
 const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, handleDelete }) => {
   const isNote = !!noteId
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
   const tagOptions = useSelector(selectAll)
-  const todayDate = getTodayDate();
+  // const todayDate = getTodayDate();
 
   const handleEdit = () => setEdit(!edit)
 
@@ -32,7 +27,7 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
       dispatch(notesChange({ id: noteId, changes: { title, description, tags } }))
     }
     else {
-      const newNote = { title, description, id: uniqid(), tags, createAt: todayDate }
+      const newNote = { title, description, id: uniqid(), tags, createAt: new Date().toLocaleString() }
       dispatch(notesCreate(newNote))
       resetForm();
     }
@@ -48,8 +43,8 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
       validationSchema={Yup.object({
         title: Yup
           .string()
-          .min(2, '')
-          .max(30, `Max ${30} char`)
+          .min(2, 'Min 2 char')
+          .max(30, `Max 30 char`)
           .trim()
           .required('Requiered'),
         description: Yup
