@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomSelect from "../customForms/CustomSelect";
 import { CustomField } from "../customForms/CustomField";
 import { filtersAdd, selectAll, filtersDelete } from "../../redux/filters.Slice";
+import { selectAll as selectNotes, notesTagsDeleted } from "../../redux/notes.Slice";
 import { Button } from "@mui/material";
 import uniqid from 'uniqid'
 
 const FormTag = ({ }) => {
   const dispatch = useDispatch()
-  const allTags = useSelector(selectAll).map(item => ({ value: item.id, label: item.label }))
+  const allTags = useSelector(selectAll).map(item => ({ value: [item.id, item.label], label: item.label }))
+  const notes = useSelector(selectNotes)
 
   const handleSubmit = (tag, { resetForm }) => {
     const newTag = {
@@ -17,7 +19,7 @@ const FormTag = ({ }) => {
       label: tag.newTag,
       id: uniqid()
     }
-    if (allTags.some(item => item.value === newTag.value)) {
+    if (allTags.some(item => item.label === newTag.label)) {
       console.log('have exist')
       return
     }
@@ -30,39 +32,23 @@ const FormTag = ({ }) => {
   }
 
   const handleDelete = (value, { resetForm }) => {
-    console.log(value.deletedTags)
-    dispatch(filtersDelete(value.deletedTags))
-    resetForm()
+    const deletedTags = value.deletedTags.map(item => item[1])
+    const deletedTagsIds = value.deletedTags.map(item => item[0])
+    const newNotes = notes.map(item => ({
+      ...item,
+      tags: item.tags.filter(item => !deletedTags.includes(item))
+    }))
+    if (allTags.length - deletedTagsIds.length >= 2) {
+      dispatch(filtersDelete(deletedTagsIds))
+      dispatch(notesTagsDeleted(newNotes))
+      resetForm()
+      return
+    }
+    console.log('должно остастся хотя бы 2 тега')
   }
 
   return (
     <div>
-      <Formik
-        initialValues={{
-          deletedTags: []
-        }}
-        validationSchema={Yup.object({
-          deletedTags: Yup
-            .array()
-            .min(1)
-            .required('Requiered')
-        })}
-        onSubmit={handleDelete}
-      >
-        <Form className="form-note">
-          <h2 className="form-note__title title">{'Delete tag'}</h2>
-          <CustomField
-            label={'Delete tag'}
-            name='deletedTags'
-            type="text"
-            id='deletedTags'
-            component={CustomSelect}
-            options={allTags}
-            isMulti={true}
-          />
-          <Button type={'submit'}>- Delete tag</Button>
-        </Form>
-      </Formik >
       <Formik
         initialValues={{
           newTag: ''
@@ -80,12 +66,38 @@ const FormTag = ({ }) => {
         <Form className="form-note">
           <h2 className="form-note__title title">{'New tag'}</h2>
           <CustomField
-            label={'Add tag'}
+            // label={'Add tag'}
             name='newTag'
             type="text"
             id='newTag'
           />
           <Button type={'submit'}>+ Add tag</Button>
+        </Form>
+      </Formik >
+      <Formik
+        initialValues={{
+          deletedTags: []
+        }}
+        validationSchema={Yup.object({
+          deletedTags: Yup
+            .array()
+            .min(1)
+            .required('Requiered')
+        })}
+        onSubmit={handleDelete}
+      >
+        <Form className="form-note">
+          <h2 className="form-note__title title">{'Delete tag'}</h2>
+          <CustomField
+            // label={'Delete tag'}
+            name='deletedTags'
+            type="text"
+            id='deletedTags'
+            component={CustomSelect}
+            options={allTags}
+            isMulti={true}
+          />
+          <Button type={'submit'}>- Delete tag</Button>
         </Form>
       </Formik >
     </div>

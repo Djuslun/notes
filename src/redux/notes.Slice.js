@@ -3,11 +3,6 @@ import { useHttp } from '../hooks/http.hook'
 
 const notesAdapter = createEntityAdapter()
 
-// export const allTags = tagOptions.reduce((acc, tag) => {
-//   acc[tag.value] = []
-//   return acc
-// }, {})
-
 // export const fetchNotes = createAsyncThunk(
 //   'notes/fetchNotes',
 //   () => {
@@ -32,6 +27,9 @@ const notesSlice = createSlice({
     notesChange: (state, action) => {
       notesAdapter.updateOne(state, action.payload)
     },
+    notesTagsDeleted: (state, action) => {
+      notesAdapter.setAll(state, action.payload)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -48,4 +46,4 @@ export default reducer
 
 export const { selectAll, selectById } = notesAdapter.getSelectors(state => state.notes)
 
-export const { notesCreate, notesDelete, notesChange } = actions
+export const { notesCreate, notesDelete, notesChange, notesTagsDeleted } = actions

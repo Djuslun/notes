@@ -3,7 +3,9 @@ import { COLORS } from '../../utils/consts'
 
 const CustomPieChart = ({ data, className }) => {
   const list = data.map((item, index) => {
-    return <li style={{ 'color': `${COLORS[index]}` }}>{`${item.name}: ${item.value}`}</li>
+    return item.value
+      ? <li key={index} style={{ 'color': `${COLORS[index]}` }}>{`${item.name}: ${item.value}`}</li>
+      : null
   })
 
   return (
