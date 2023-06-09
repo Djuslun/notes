@@ -10,6 +10,8 @@ import { selectAll } from '../../redux/filters.Slice'
 import ButtonBox from "../buttons/ButtonBox";
 import './FormNote.scss'
 
+import CustomMDEditor from "../customMDEditor/CustomMDEditor";
+
 const getTodayDate = () => {
   const today = new Date();
   const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
@@ -73,7 +75,7 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
         <CustomField
           label={'Note description'}
           name="description"
-          as='textarea'
+          component={CustomMDEditor}
           id='description'
           className={'form-note__description-field'}
           edit={edit}

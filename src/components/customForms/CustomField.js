@@ -4,7 +4,7 @@ export const CustomField = ({ label, edit, noteId, className, ...props }) => {
   return (
     <>
       <div className="form-note__input">
-        <label >
+        <div >
           <p className={`form-note__label`}>{label}</p>
           <Field
             className={`form-note__field ${className ? className : ''}`}
@@ -12,7 +12,7 @@ export const CustomField = ({ label, edit, noteId, className, ...props }) => {
             {...props}
           />
           <ErrorMessage name={props.name}>{msg => <div className="error">{msg}</div>}</ErrorMessage>
-        </label>
+        </div>
       </div>
     </>
   )
