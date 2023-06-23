@@ -8,17 +8,14 @@ import CustomSelect from "../customForms/CustomSelect";
 import { CustomField } from "../customForms/CustomField";
 import { selectAll } from '../../redux/filters.Slice'
 import ButtonBox from "../buttons/ButtonBox";
-// import { getTodayDate } from "../../utils/getDay";
 import CustomMDEditor from "../customMDEditor/CustomMDEditor";
 import './FormNote.scss'
-
 
 const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, handleDelete }) => {
   const isNote = !!noteId
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch()
   const tagOptions = useSelector(selectAll)
-  // const todayDate = getTodayDate();
 
   const handleEdit = () => setEdit(!edit)
 
@@ -86,7 +83,6 @@ const FormNote = ({ title, description, tags: noteTags, noteId, handleOpen, hand
           placeholder='Select tags'
           isMulti={true}
           options={tagOptions}
-          maxMenuHeight={'65px'}
         />
         <ButtonBox
           isNote={isNote}

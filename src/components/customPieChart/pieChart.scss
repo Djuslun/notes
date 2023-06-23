@@ -1,0 +1,12 @@
+.pieChart {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+
+  &__list {
+    li {
+      list-style: disc;
+      margin-bottom: 10px;
+    }
+  }
+}

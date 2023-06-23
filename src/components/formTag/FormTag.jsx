@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomSelect from "../customForms/CustomSelect";
 import { CustomField } from "../customForms/CustomField";
 import { filtersAdd, selectAll, filtersDelete } from "../../redux/filters.Slice";
-import { selectAll as selectNotes, notesTagsDeleted } from "../../redux/notes.Slice";
-import { Button } from "@mui/material";
+import { selectAll as selectNotes, notesSet } from "../../redux/notes.Slice";
+import Button from '../buttons/Button'
 import uniqid from 'uniqid'
+import './formTag.scss'
 
 const FormTag = ({ }) => {
   const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const FormTag = ({ }) => {
     }))
     if (allTags.length - deletedTagsIds.length >= 2) {
       dispatch(filtersDelete(deletedTagsIds))
-      dispatch(notesTagsDeleted(newNotes))
+      dispatch(notesSet(newNotes))
       resetForm()
       return
     }
@@ -48,7 +49,7 @@ const FormTag = ({ }) => {
   }
 
   return (
-    <div>
+    <div className="form-tag">
       <Formik
         initialValues={{
           newTag: ''
@@ -66,7 +67,6 @@ const FormTag = ({ }) => {
         <Form className="form-note">
           <h2 className="form-note__title title">{'New tag'}</h2>
           <CustomField
-            // label={'Add tag'}
             name='newTag'
             type="text"
             id='newTag'
@@ -89,7 +89,6 @@ const FormTag = ({ }) => {
         <Form className="form-note">
           <h2 className="form-note__title title">{'Delete tag'}</h2>
           <CustomField
-            // label={'Delete tag'}
             name='deletedTags'
             type="text"
             id='deletedTags'

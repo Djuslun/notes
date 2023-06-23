@@ -9,13 +9,19 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { filtersSet } from './redux/filters.Slice';
 import { tagOptions } from './utils/consts';
+import { notesSet } from './redux/notes.Slice';
 import './App.scss';
 
 function App() {
   const dispatch = useDispatch()
 
+  const store = JSON.parse(localStorage.getItem('store'))
+
   useEffect(() => {
-    dispatch(filtersSet(tagOptions))
+    const filters = Object.values(store.filters.entities) || tagOptions
+    const notes = Object.values(store.notes.entities) || []
+    dispatch(filtersSet(filters))
+    dispatch(notesSet(notes))
   }, [])
 
   return (

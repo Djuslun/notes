@@ -1,9 +1,10 @@
 
-const Button = ({ children, type, onClick }) => {
+const Button = ({ children, type, onClick, className }) => {
+  const clazzName = className ? className : 'form-note__button'
   return (
     <button
       type={type}
-      className="form-note__button"
+      className={clazzName}
       onClick={onClick}>
       {children}
     </button>

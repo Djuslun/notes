@@ -5,12 +5,13 @@
     'title title'
     'pie bar'
     'notes notes';
-  grid-template-rows: minmax(100px, auto) 1fr;
+  grid-template-rows: minmax(60px, auto) 1fr;
 
   &__title {
     font-size: 24px;
     color: #fff;
     grid-area: title;
+    margin-bottom: 20px;
   }
 
   &__bar {
@@ -19,11 +20,17 @@
 
   &__pie {
     grid-area: pie;
-    display: flex;
-    align-items: center;
   }
 
   &__notes {
+    margin-top: 20px;
     grid-area: notes;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__bar-chart {
+    position: relative;
+    left: -65px;
   }
 }

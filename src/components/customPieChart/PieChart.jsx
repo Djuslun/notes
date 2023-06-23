@@ -1,5 +1,6 @@
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 import { COLORS } from '../../utils/consts'
+import './pieChart.scss'
 
 const CustomPieChart = ({ data, className }) => {
   const list = data.map((item, index) => {
@@ -9,7 +10,7 @@ const CustomPieChart = ({ data, className }) => {
   })
 
   return (
-    <div className={className}>
+    <div className={`pieChart ${className}`}>
       <PieChart width={300} height={300}>
         <Pie
           dataKey="value"
@@ -25,7 +26,7 @@ const CustomPieChart = ({ data, className }) => {
         </Pie>
         <Tooltip />
       </PieChart>
-      <ul>
+      <ul className='pieChart__list'>
         {list}
       </ul>
     </div>

@@ -1,15 +1,6 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
-import { useHttp } from '../hooks/http.hook'
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 
 const notesAdapter = createEntityAdapter()
-
-// export const fetchNotes = createAsyncThunk(
-//   'notes/fetchNotes',
-//   () => {
-//     const { request } = useHttp();
-//     return request("https://cautious-tuna-nightshirt.cyclic.app/api/notes")
-//   }
-// )
 
 const initialState = notesAdapter.getInitialState({
 })
@@ -27,15 +18,12 @@ const notesSlice = createSlice({
     notesChange: (state, action) => {
       notesAdapter.updateOne(state, action.payload)
     },
-    notesTagsDeleted: (state, action) => {
+    notesSet: (state, action) => {
       notesAdapter.setAll(state, action.payload)
     }
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(fetchNotes.fulfilled, (state, action) => {
-      //   notesAdapter.setAll(state, action.payload)
-      // })
       .addDefaultCase(() => { })
   }
 })
@@ -46,4 +34,4 @@ export default reducer
 
 export const { selectAll, selectById } = notesAdapter.getSelectors(state => state.notes)
 
-export const { notesCreate, notesDelete, notesChange, notesTagsDeleted } = actions
+export const { notesCreate, notesDelete, notesChange, notesSet } = actions

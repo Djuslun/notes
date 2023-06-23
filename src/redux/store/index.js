@@ -20,4 +20,8 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
 })
 
+store.subscribe(() => {
+  localStorage["store"] = JSON.stringify(store.getState())
+})
+
 export default store;

@@ -1,7 +1,6 @@
 import { AiFillEdit } from 'react-icons/ai'
 import { MdDashboard } from 'react-icons/md'
 import { VscGraph } from 'react-icons/vsc'
-import { FiSettings } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom';
 import './sideBar.scss'
 
@@ -18,9 +17,6 @@ const SideBar = ({ }) => {
       </NavLink>
       <NavLink to={'/notes'} className={activeClass}>
         <MdDashboard color='white' className='aside__icon' />
-      </NavLink>
-      <NavLink to={'/settings'} className={activeClass}>
-        <FiSettings color='white' className='aside__icon' />
       </NavLink>
     </aside>
   )

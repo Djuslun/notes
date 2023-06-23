@@ -10,12 +10,6 @@ const CustomBarChart = ({ dataWeek, className }) => {
         width={500}
         height={300}
         data={dataWeek}
-        margin={{
-          top: 10,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
       ><CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" stroke="#fff" />
         <YAxis tickCount={tickCount} interval={0} domain={[0, maxValue]} stroke="#fff" />
