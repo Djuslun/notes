@@ -5,24 +5,11 @@ import NewNote from './pages/newNote/NewNote';
 import DashBoard from './pages/dashBoard/DashBoard';
 import Note from './pages/note/Note';
 import NotFoundPage from './pages/notFoundPage/NotFoundPage'
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { filtersSet } from './redux/filters.Slice';
-import { tagOptions } from './utils/consts';
-import { notesSet } from './redux/notes.Slice';
+import { useLocalStogare } from './hooks/useLocalStogare';
 import './App.scss';
 
 function App() {
-  const dispatch = useDispatch()
-
-  const store = JSON.parse(localStorage.getItem('store'))
-
-  useEffect(() => {
-    const filters = Object.values(store.filters.entities) || tagOptions
-    const notes = Object.values(store.notes.entities) || []
-    dispatch(filtersSet(filters))
-    dispatch(notesSet(notes))
-  }, [])
+  useLocalStogare()
 
   return (
     <BrowserRouter>
